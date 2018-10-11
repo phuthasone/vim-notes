@@ -1298,12 +1298,16 @@ function! xolox#notes#foldtext() " {{{3
   let matches = matchlist(line, '^\(#\+\)\s*\(.*\)$')
   if len(matches) >= 3
     let _len = (len(matches[1]) - 1) * 3
-    if _len == 0 | let _len = 1 | endif
+    if _len == 0
+      let _len = 1
+    else
+      let _len += 2
+    endif
     let foldsize = v:foldend - v:foldstart
     let lines = '(' . repeat(' ', 4 - len(foldsize)) . foldsize . ' lines)'
     let prefix = repeat('-', _len)
     let foldline =  prefix . ' ' . matches[2]
-    let space = 80 - len(foldline) - len(lines)
+    let space = 4
     return foldline . repeat('-', space) . lines
   else
     return line
