@@ -1295,13 +1295,16 @@ endfunction
 function! xolox#notes#foldtext() " {{{3
   " Replace atx style "#" markers with "-" fold marker.
   let line = getline(v:foldstart)
-  if line == ''
-    let line = getline(v:foldstart + 1)
-  endif
   let matches = matchlist(line, '^\(#\+\)\s*\(.*\)$')
   if len(matches) >= 3
-    let prefix = repeat('-', len(matches[1]))
-    return prefix . ' ' . matches[2] . ' '
+    let _len = (len(matches[1]) - 1) * 3
+    if _len == 0 | let _len = 1 | endif
+    let foldsize = v:foldend - v:foldstart
+    let lines = '(' . repeat(' ', 4 - len(foldsize)) . foldsize . ' lines)'
+    let prefix = repeat('-', _len)
+    let foldline =  prefix . ' ' . matches[2]
+    let space = 80 - len(foldline) - len(lines)
+    return foldline . repeat('-', space) . lines
   else
     return line
   endif
