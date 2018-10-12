@@ -1299,8 +1299,8 @@ function! xolox#notes#foldtext() " {{{3
   if len(matches) >= 3
     let foldsize = v:foldend - v:foldstart
     let lines = '(' . repeat(' ', 3 - len(foldsize)) . foldsize . ' lines)'
-    let _len = pow(2,len(matches[1]))
-    if _len == 2 | let _len = 1 | endif
+    let _len = 4 * (len(matches[1]) - 1)
+    if _len == 0 | let _len = 1 | endif
     let prefix = repeat('➤', float2nr(_len))
     let foldline =  prefix . ' ' . matches[2]
     let space = 4
