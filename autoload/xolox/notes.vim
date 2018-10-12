@@ -1303,7 +1303,7 @@ function! xolox#notes#foldtext() " {{{3
     if _len == 0 | let _len = 1 | endif
     let prefix = repeat('➤', float2nr(_len))
     let foldline =  prefix . ' ' . matches[2]
-    let space = 4
+    let space = winwidth(0) - (&number ? &numberwidth : 0) - &fdc - strdisplaywidth(foldline) - strdisplaywidth(lines)
     return foldline . repeat('-', space) . lines
   else
     return line
